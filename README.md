@@ -1,6 +1,10 @@
 # Babel Plugin: syntax-exists
 This is a <a href="https://babeljs.io">Babel</a> plugin which adds syntax for making existential checks in your code.  
 It uses the the keyword `.ex` which is short for "exists". :sparkles:
+# TODOS
+- [ ] Write tests
+- [ ] Uh.. Make it work
+
 
 ## What?
 From <a href="https://arcturo.github.io/library/coffeescript/index.html">The Little Book on Coffeescript</a>:
