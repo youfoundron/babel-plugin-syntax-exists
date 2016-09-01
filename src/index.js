@@ -7,6 +7,21 @@
 module.exports = ({ types: t }) => {
 
   /**
+  * Returns a BinaryExpression comparing one expression against another
+  *
+  * @param {Expression} comparate_left The Expression we are comparing against
+  * @param {Expression} comparate_right The Expression we are comparing
+  * @returns {BinaryExpression}
+  */
+  function isNotExp(comparate_left, comparate_right) {
+    return t.binaryExpression(
+      "!==",
+      comparate_left,
+      comparate_right
+    )
+  }
+
+  /**
    * Returns a BinaryExpression comparing the typeof an Expression against a String
    *
    * @param {Expression} path The Expression destructured to get its' object property
@@ -14,8 +29,7 @@ module.exports = ({ types: t }) => {
    * @returns {BinaryExpression}
    */
   function isNotTypeofExp({ node: {object} }, type_string) {
-    return t.binaryExpression(
-      "!==",
+    return isNotExp(
       t.unaryExpression("typeof", object, false),
       t.stringLiteral(type_string)
     )
@@ -27,18 +41,18 @@ module.exports = ({ types: t }) => {
    * @param {Expression} path The Expression to be passed to isNotTypeofExp
    * @returns {BinaryExpression}
    */
-  function isNotUndefinedExp(path) {
+  function isNotTypeUndefinedExp(path) {
     return isNotTypeofExp(path, "undefined")
   }
 
   /**
    * Returns a BinaryExpression comparing the typeof an Expression against "null"
    *
-   * @param {Expression} path The Expression to be passed to isNotTypeofExp
+   * @param {Expression} path The Expression destructured to be passed to isNotTypeofExp
    * @returns {BinaryExpression}
    */
-  function isNotNullExp(path) {
-    return isNotTypeofExp(path, "null")
+  function isNotNullExp({ node: {property: {name}} }) {
+    return isNotExp(t.Identifier(name), t.nullLiteral())
   }
 
   /**
@@ -47,7 +61,7 @@ module.exports = ({ types: t }) => {
    * @param {Expression} path The Expression to be passed to isNotTypeofExp
    * @returns {BinaryExpression}
    */
-  function isNotFunction(path) {
+  function isNotTypeFunction(path) {
     return isNotTypeofExp(path, "function")
   }
 
@@ -58,10 +72,10 @@ module.exports = ({ types: t }) => {
    * @param {Expression} path The Expression to be used for comparison
    * @returns {LogicalExpression}
    */
-  function isNotUndefinedAndNotNullExp(path) {
+  function isNotTypeUndefinedAndNotNullExp(path) {
     return t.logicalExpression(
       "&&",
-      isNotUndefinedExp(path),
+      isNotTypeUndefinedExp(path),
       isNotNullExp(path)
     )
   }
@@ -74,11 +88,11 @@ module.exports = ({ types: t }) => {
    * @param {Expression} path The Expression to be used for comparison
    * @returns {LogicalExpression}
    */
-  function isNotUndefinedAndNotNullAndNotFunctionExp(path) {
+  function isNotTypeUndefinedAndNotNullAndNotTypeFunctionExp(path) {
     return t.logicalExpression(
       "&&",
-      isNotUndefinedAndNotNullExp(path),
-      isNotFunction(path)
+      isNotTypeUndefinedAndNotNullExp(path),
+      isNotTypeFunction(path)
     )
   }
 
@@ -137,7 +151,7 @@ module.exports = ({ types: t }) => {
    * test, consequent and alternate expression factories
    */
   function testMemberExp(path) {
-    return isNotUndefinedAndNotNullExp(path)
+    return isNotTypeUndefinedAndNotNullExp(path)
   }
 
   function consequentMemberExp(path) {
@@ -157,7 +171,7 @@ module.exports = ({ types: t }) => {
    * test, consequent and alternate expression factories
    */
   function testCallExp(path) {
-    return isNotUndefinedAndNotNullAndNotFunctionExp(path)
+    return isNotTypeUndefinedAndNotNullAndNotTypeFunctionExp(path)
   }
 
   function consequentCallExp(path) {
