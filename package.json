@@ -1,0 +1,40 @@
+{
+  "name": "babel-plugin-syntax-existential-operator",
+  "version": "1.0.0",
+  "description": "Allow parsing of an existential operator in Babel",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rongierlach/babel-plugin-syntax-existential-operator"
+  },
+  "keywords": [
+    "babel-plugin",
+    "babel",
+    "?",
+    "plugin",
+    "syntax",
+    "existential",
+    "operator",
+    "null",
+    "isNil",
+    "nil",
+    "nil?",
+    "try"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "author": "Ron Gierlach <rongierlach@gmail.com> (https://github.com/rongierlach)",
+  "scripts": {
+    "clean": "rimraf lib",
+    "build": "babel src -d lib",
+    "test": "mocha --compilers js:babel-register",
+    "test:watch": "npm run test -- --watch",
+    "prepublish": "npm run clean && npm run build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-preset-es2015": "^6.14.0",
+    "mocha": "^3.0.2"
+  }
+}
