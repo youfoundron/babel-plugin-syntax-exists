@@ -48,11 +48,11 @@ module.exports = ({ types: t }) => {
   /**
    * Returns a BinaryExpression comparing the typeof an Expression against "null"
    *
-   * @param {Expression} path The Expression destructured to be passed to isNotTypeofExp
+   * @param {Expression} path The Expression to be passed to isNotTypeofExp
    * @returns {BinaryExpression}
    */
-  function isNotNullExp({ node: {property: {name}} }) {
-    return isNotExp(t.Identifier(name), t.nullLiteral())
+  function isNotNullExp({ node: {object} }) {
+    return isNotExp(object, t.nullLiteral())
   }
 
   /**
@@ -116,7 +116,7 @@ module.exports = ({ types: t }) => {
    * @returns {Boolean}
    */
   function childExists(path) {
-    return Boolean(path.parent.type !== "ExpressionStatement")
+    return Boolean(path.parent.property)
   }
 
   /**
@@ -161,9 +161,10 @@ module.exports = ({ types: t }) => {
   }
 
   function alternativeMemberExp(path) {
-    return (childExists(path))
-      ? t.unaryExpression("void", t.numericLiteral(0), false)
-      : t.booleanLiteral(false)
+    return t.booleanLiteral(false)
+    // return (childExists(path))
+    //   ? t.unaryExpression("void", t.numericLiteral(0), false)
+    //   : t.booleanLiteral(false)
   }
 
   /**
@@ -179,9 +180,10 @@ module.exports = ({ types: t }) => {
   }
 
   function alternativeCallExp(path) {
-    return (childExists(path))
-      ? t.unaryExpression("void", t.numericLiteral(0), false)
-      : t.booleanLiteral(false)
+    return t.booleanLiteral(false)
+    // return (childExists(path))
+    //   ? t.unaryExpression("void", t.numericLiteral(0), false)
+    //   : t.booleanLiteral(false)
   }
 
   /**
