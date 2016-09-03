@@ -12,7 +12,7 @@ function testTransformation(actual, expected) {
     actual_val = eval(actual)
     expected_val = eval(expected)
   } catch(err) {
-    console.log("    Cannot transform the src!")
+    console.log('    Cannot transform the src!')
     expect(eval(actual)).to.not.throw(Error)
   }
 
