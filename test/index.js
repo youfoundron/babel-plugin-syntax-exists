@@ -8,8 +8,8 @@ import { transformFileSync, transformFile } from 'babel-core'
 function testTransformation(actual, expected) {
   const actual_val = eval(actual)
   const expected_val = eval(expected)
-  console.log("ACTUAL:", actual_val, actual)
-  console.log("EXPECTED:", expected_val, expected)
+  // console.log("ACTUAL:", actual_val, actual)
+  // console.log("EXPECTED:", expected_val, expected)
   expect(actual_val).to.equal(expected_val)
 }
 
