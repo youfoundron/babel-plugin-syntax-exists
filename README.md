@@ -2,7 +2,7 @@
 This is a <a href="https://babeljs.io">Babel</a> plugin which adds syntax for making existential checks in your code.  
 It uses the the keyword `ex` which is short for *exists*. :sparkles:  
   
-[![Build Status](https://travis-ci.org/rongierlach/babel-plugin-syntax-exists.svg?branch=master)](https://travis-ci.org/rongierlach/babel-plugin-syntax-exists)
+[![Build Status](https://travis-ci.org/rongierlach/babel-plugin-syntax-exists.svg?branch=master)](https://travis-ci.org/rongierlach/babel-plugin-syntax-exists) [![Dependency Status](https://david-dm.org/rongierlach/babel-plugin-syntax-exists.svg)](https://david-dm.org/rongierlach/babel-plugin-syntax-exists) [![devDependency Status](https://david-dm.org/rongierlach/babel-plugin-syntax-exists/dev-status.svg)](https://david-dm.org/rongierlach/babel-plugin-syntax-exists#info=devDependencies)
 
 # Features
 - [x] Return true if value exists
