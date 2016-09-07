@@ -3,9 +3,14 @@ This is a <a href="https://babeljs.io">Babel</a> plugin which adds syntax for ma
 It uses the the keyword `ex` which is short for *exists*. :sparkles:  
   
 [![Build Status](https://travis-ci.org/rongierlach/babel-plugin-syntax-exists.svg?branch=master)](https://travis-ci.org/rongierlach/babel-plugin-syntax-exists)
-# TODOS
-- [ ] Write tests
-- [ ] Uh.. Make it work
+
+# Features
+- [x] Return true if value exists
+- [x] Return false if value null or undefined
+- [x] Return child if parent exists
+- [ ] Return false on child if parent null or undefined
+- [x] Return function call if value is a function
+- [x] Return false for function call if value is not a function
 
 
 ## What?
@@ -27,7 +32,7 @@ We can write write the following statements and expect the subsequent returns:
 ```
 obj.ex.attr              // 'value'
 obj.attr.ex              // true
-obj.nested_attr.ex.name // 'nested'
+obj.nested_attr.ex.name  // 'nested'
 
 // Oh, and it works for functions too...
 // --------------------------------------
