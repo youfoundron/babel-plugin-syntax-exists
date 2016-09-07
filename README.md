@@ -6,9 +6,9 @@ It uses the the keyword `ex` which is short for *exists*. :sparkles:
 
 # Features
 - [x] Return true if value exists
-- [x] Return false if value null or undefined
+- [x] Return false if value is null or undefined
 - [x] Return child if parent exists
-- [ ] Return false on child if parent null or undefined
+- [ ] Return false on child if parent is null or undefined
 - [x] Return function call if value is a function
 - [x] Return false for function call if value is not a function
 
@@ -42,7 +42,7 @@ obj.func.ex()            // 777
 // But what about undefined errors?
 // --------------------------------------
 obj.doesnt_exist.ex      // false
-obj.doesnt_exist.ex.nope // false
+// obj.doesnt_exist.ex.nope // false
 obj.not_a_func.ex()      // false
 ```
 ## Installation
