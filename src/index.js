@@ -208,14 +208,6 @@ module.exports = ({ types: t }) => {
     return t.booleanLiteral(false)
   }
 
-  function existentialCallExpression(path) {
-    return t.conditionalExpression(
-      testCallExp(path),
-      consequentCallExp(path),
-      alternativeCallExp(path)
-    )
-  }
-
   /**
    * Computed:
    * test, consequent, alternate and existential expression factories
