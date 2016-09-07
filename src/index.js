@@ -159,22 +159,6 @@ module.exports = ({ types: t }) => {
   }
 
   /**
-   * Returns a Boolean value representing
-   * the existence of child accessing an Expression's scope
-   *
-   * @param {Expression} path The Expression to check for a child scope accessor on
-   * @returns {Boolean}
-   */
-  function scopeIsAccessed(path) {
-    return Boolean(
-      parentExists(path) &&
-      parentExists(path.parent) &&
-      path.parent.parent.type === "MemberExpression"
-    )
-  }
-
-
-  /**
    * MemberExpression:
    * test, consequent and alternate expression factories
    */
