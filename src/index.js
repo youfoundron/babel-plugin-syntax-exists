@@ -13,11 +13,40 @@ module.exports = ({ types: t }) => {
   * @param {Expression} comparate_right The Expression we are comparing
   * @returns {BinaryExpression}
   */
+  function isExp(comparate_left, comparate_right) {
+    return t.binaryExpression(
+      "===",
+      comparate_left,
+      comparate_right
+    )
+  }
+
+  /**
+  * Returns a BinaryExpression comparing one expression against another
+  *
+  * @param {Expression} comparate_left The Expression we are comparing against
+  * @param {Expression} comparate_right The Expression we are comparing
+  * @returns {BinaryExpression}
+  */
   function isNotExp(comparate_left, comparate_right) {
     return t.binaryExpression(
       "!==",
       comparate_left,
       comparate_right
+    )
+  }
+
+  /**
+   * Returns a BinaryExpression comparing the typeof an Expression against a String
+   *
+   * @param {Expression} path The Expression destructured to get its' object property
+   * @param {String} type_string The String we will compare against
+   * @returns {BinaryExpression}
+   */
+  function isTypeofExp({ node: {object} }, type_string) {
+    return isExp(
+      t.unaryExpression("typeof", object, false),
+      t.stringLiteral(type_string)
     )
   }
 
@@ -61,8 +90,8 @@ module.exports = ({ types: t }) => {
    * @param {Expression} path The Expression to be passed to isNotTypeofExp
    * @returns {BinaryExpression}
    */
-  function isNotTypeFunction(path) {
-    return isNotTypeofExp(path, "function")
+  function isTypeFunction(path) {
+    return isTypeofExp(path, "function")
   }
 
   /**
@@ -88,11 +117,11 @@ module.exports = ({ types: t }) => {
    * @param {Expression} path The Expression to be used for comparison
    * @returns {LogicalExpression}
    */
-  function isNotTypeUndefinedAndNotNullAndNotTypeFunctionExp(path) {
+  function isNotTypeUndefinedAndNotNullAndTypeFunctionExp(path) {
     return t.logicalExpression(
       "&&",
       isNotTypeUndefinedAndNotNullExp(path),
-      isNotTypeFunction(path)
+      isTypeFunction(path)
     )
   }
 
@@ -104,7 +133,6 @@ module.exports = ({ types: t }) => {
    * @returns {Boolean}
    */
   function parentExists(path) {
-    if (path.parent)
     return Boolean(path.parent)
   }
 
@@ -162,9 +190,6 @@ module.exports = ({ types: t }) => {
 
   function alternativeMemberExp(path) {
     return t.booleanLiteral(false)
-    // return (childExists(path))
-    //   ? t.unaryExpression("void", t.numericLiteral(0), false)
-    //   : t.booleanLiteral(false)
   }
 
   /**
@@ -172,18 +197,23 @@ module.exports = ({ types: t }) => {
    * test, consequent and alternate expression factories
    */
   function testCallExp(path) {
-    return isNotTypeUndefinedAndNotNullAndNotTypeFunctionExp(path)
+    return isNotTypeUndefinedAndNotNullAndTypeFunctionExp(path)
   }
 
   function consequentCallExp(path) {
-    return t.callExpression(path, path.parent.arguments)
+    return t.callExpression(path.node.object, path.parent.arguments)
   }
 
   function alternativeCallExp(path) {
     return t.booleanLiteral(false)
-    // return (childExists(path))
-    //   ? t.unaryExpression("void", t.numericLiteral(0), false)
-    //   : t.booleanLiteral(false)
+  }
+
+  function existentialCallExpression(path) {
+    return t.conditionalExpression(
+      testCallExp(path),
+      consequentCallExp(path),
+      alternativeCallExp(path)
+    )
   }
 
   /**
@@ -210,12 +240,9 @@ module.exports = ({ types: t }) => {
 
   function existentialExpression(path) {
     return t.conditionalExpression(
-      // testExpression(path),
-      // consequentExpression(path),
-      // alternativeExpression(path)
-      testMemberExp(path),
-      consequentMemberExp(path),
-      alternativeMemberExp(path)
+      testExpression(path),
+      consequentExpression(path),
+      alternativeExpression(path)
     )
   }
 
@@ -225,12 +252,15 @@ module.exports = ({ types: t }) => {
    */
   return {
     visitor: {
+
       MemberExpression(path) {
         const name = path.node.property.name
         if (name === "ex") {
-          path.replaceWith( existentialExpression(path) )
+          const path_to_replace = (isCallee(path)) ? path.parentPath : path
+          path_to_replace.replaceWith( existentialExpression(path) )
         }
       }
+
     }
   }
 }
