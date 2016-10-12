@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-syntax-exists",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Allows parsing of an existential check in Babel",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "keywords": [
     "babel-plugin",
     "babel",
-    "?",
+    "exists",
     "plugin",
     "syntax",
     "existential",
@@ -17,7 +17,6 @@
     "null",
     "isNil",
     "nil",
-    "nil?",
     "try"
   ],
   "license": "MIT",
