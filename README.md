@@ -18,7 +18,7 @@ From <a href="https://arcturo.github.io/library/coffeescript/index.html">The Lit
 > Using `if` for `null` checks in JavaScript is common, but has a few pitfalls in that empty strings and `zero` are both coerced into `false`, which can catch you out. CoffeeScript existential operator ? returns `true` unless a variable is `null` or `undefined`, similar to Ruby's `nil?`.  
 
 ### So what does it look like?
-`foo.ex` compiles to `typeof foo !== "undefined" && foo !== null`
+`foo.ex` transpiles to `typeof foo !== "undefined" && foo !== null`
 ### How about a more exhilirating use case?
 Given an object:
 ```
@@ -42,7 +42,7 @@ obj.func.ex()            // 777
 // But what about undefined errors?
 // --------------------------------------
 obj.doesnt_exist.ex      // false
-// obj.doesnt_exist.ex.nope // false
+obj.doesnt_exist.ex.nope // false
 obj.not_a_func.ex()      // false
 ```
 ## Installation
