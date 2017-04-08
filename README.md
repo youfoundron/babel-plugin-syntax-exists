@@ -15,7 +15,7 @@ It uses the the keyword `ex` which is short for *exists*. :sparkles:
 
 ## What?
 From <a href="https://arcturo.github.io/library/coffeescript/index.html">The Little Book on Coffeescript</a>:
-> Using `if` for `null` checks in JavaScript is common, but has a few pitfalls in that empty strings and `zero` are both coerced into `false`, which can catch you out. CoffeeScript existential operator ? returns `true` unless a variable is `null` or `undefined`, similar to Ruby's `nil?`.  
+> Using `if` for `null` checks in JavaScript is common, but has a few pitfalls in that empty strings and `zero` are both coerced into `false`, which can catch you out. CoffeeScript existential operator `?` returns `true` unless a variable is `null` or `undefined`, similar to Ruby's `nil?`.  
 
 ### So what does it look like?
 `foo.ex` transpiles to `typeof foo !== "undefined" && foo !== null`
