@@ -42,7 +42,7 @@ obj.func.ex()            // 777
 // But what about undefined errors?
 // --------------------------------------
 obj.doesnt_exist.ex      // false
-obj.doesnt_exist.ex.nope // false
+obj.doesnt_exist.ex.nope // false, currently unsupported :(
 obj.not_a_func.ex()      // false
 ```
 ## Installation
@@ -62,7 +62,7 @@ obj.not_a_func.ex()      // false
 
 ### Via Node API
 ```
-require('babel').transform('code',{
+require('babel').transform('code', {
   plugins: ['syntax-exists']
 });
 ```
